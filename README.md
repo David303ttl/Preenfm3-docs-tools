@@ -9,7 +9,13 @@ Later, however, I wanted to get around the limitations of the Renoise tool a bit
 Nothing fancy, just an instrument without a gui to give access to the parameters. 
 And here came Reaper with its JSFX and ysfx
 ## JSFX NRPN controller 
-The only slider for midi channel selection. The rest exposed as parameters. I divided into a controller for operators and envelopes and a separate one for modulators and modulation matrix (here I omitted step seq). The code looks like what it looks like, first effect. Hard-coded to arrange Op's and ADSR's in the right (for me) order.
+The only slider for midi channel selection. The rest exposed as parameters. 
+I divided into a controller for operators and envelopes and a separate one for modulators and modulation matrix (here I omitted step seq). 
+The code looks like what it looks like, first effect. Hard-coded to arrange Op's and ADSR's in the right (for me) order.
+
 How to use:
-If you don't use Reaper DAW, install ysfx and select the plug-in and jsfx file in your DAW. Easy-peasy. By the way, take a look at the fantastic jsfx's from Reaper.
+If you don't use Reaper DAW, install ysfx and select the plug-in and jsfx file in your DAW. 
+Easy-peasy. 
+By the way, take a look at the fantastic jsfx's from Reaper.
+
 It gets the job done, that's what I needed. 
