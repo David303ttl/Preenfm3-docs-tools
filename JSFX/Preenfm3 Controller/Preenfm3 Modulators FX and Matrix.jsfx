@@ -1,0 +1,356 @@
+//–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-------------------------------------------------------------------------–––//
+// version: 0.1
+// desc:Preenfm3 Modulators FX and Matrix
+// author: Davidttl
+// options: gmem=ExtendedAlgorithmSelect
+//
+// A simple controller for Preenfm3. This one is for modulators and mod matrix. 
+// All parameters are available for modulation, the UI for this is not needed. 
+// Only the slider for midi channel selection is visible, all others are commented out with '-'. 
+// Some of the ranges are clipped, but this is easy to find and modify. Some of the parameters I had to enter statically, as much as my skills allow. 
+// I needed an effect so that I could modulate the parameters and jsfx turned out to be the easiest solution. 
+// Many thanks to: Xavier Hosxe for making this fantastic synth; the entire Reaper team - great tool, scripting and jsfx is a whole other level!
+//–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-------------------------------------------------------------------------–––//
+
+import ui-lib.jsfx-inc
+
+slider1:chanout=0<0,15,1{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}>MIDI Output Channel
+
+// Note Parameters
+slider2:0<0,6,1>-Note 1 Before
+slider3:0<0,127,1>-Note 1 BreakNote
+slider4:0<0,6,1>-Note 1 After
+slider5:0<0,6,1>-Note 2 Before
+slider6:0<0,127,1>-Note 2 BreakNote
+slider7:0<0,6,1>-Note 2 After
+
+// LFO 1 Parameters
+slider8:0<0,7,1{Shape1,Shape2,Shape3,Shape4,Shape5,Shape6,Shape7,Shape8}>-LFO 1 Shape
+slider9:0<0,127,1>-LFO 1 Frequency
+slider10:0<0,200,1>-LFO 1 Bias
+slider11:0<0,16.00,0.01>-LFO 1 Ksyn
+slider12:0<0,100,1>-LFO 1 Phase
+
+// LFO 2 Parameters
+slider13:0<0,7,1{Shape1,Shape2,Shape3,Shape4,Shape5,Shape6,Shape7,Shape8}>-LFO 2 Shape
+slider14:0<0,127,1>-LFO 2 Frequency
+slider15:0<0,200,1>-LFO 2 Bias
+slider16:0<0,16.00,0.01>-LFO 2 Ksyn
+slider17:0<0,100,1>-LFO 2 Phase
+
+// LFO 3 Parameters
+slider18:0<0,7,1{Shape1,Shape2,Shape3,Shape4,Shape5,Shape6,Shape7,Shape8}>-LFO 3 Shape
+slider19:0<0,127,1>-LFO 3 Frequency
+slider20:0<0,200,1>-LFO 3 Bias
+slider21:0<0,16.00,0.01>-LFO 3 Ksyn
+slider22:0<0,100,1>-LFO 3 Phase
+
+// Matrix 1 Parameters
+slider23:0<0,27,1>-Mtx 1 Source
+slider24:0<0,34.00,0.01>-Mtx 1 Multiplier
+slider25:0<0,53,1>-Mtx 1 D1
+slider26:0<0,53,1>-Mtx 1 D2
+
+// Matrix 2 Parameters
+slider27:0<0,27,1>-Mtx 2 Source
+slider28:0<0,34.00,0.01>-Mtx 2 Multiplier
+slider29:0<0,53,1>-Mtx 2 D1
+slider30:0<0,53,1>-Mtx 2 D2
+
+// Matrix 3 Parameters
+slider31:0<0,27,1>-Mtx 3 Source
+slider32:0<0,34.00,0.01>-Mtx 3 Multiplier
+slider33:0<0,53,1>-Mtx 3 D1
+slider34:0<0,53,1>-Mtx 3 D2
+
+// Matrix 4 Parameters
+slider35:0<0,27,1>-Mtx 4 Source
+slider36:0<0,34.00,0.01>-Mtx 4 Multiplier
+slider37:0<0,53,1>-Mtx 4 D1
+slider38:0<0,53,1>-Mtx 4 D2
+
+// Matrix 5 Parameters
+slider39:0<0,27,1>-Mtx 5 Source
+slider40:0<0,34.00,0.01>-Mtx 5 Multiplier
+slider41:0<0,53,1>-Mtx 5 D1
+slider42:0<0,53,1>-Mtx 5 D2
+
+// Matrix 6 Parameters
+slider43:0<0,27,1>-Mtx 6 Source
+slider44:0<0,34.00,0.01>-Mtx 6 Multiplier
+slider45:0<0,53,1>-Mtx 6 D1
+slider46:0<0,53,1>-Mtx 6 D2
+
+// Matrix 7 Parameters
+slider47:0<0,27,1>-Mtx 7 Source
+slider48:0<0,34.00,0.01>-Mtx 7 Multiplier
+slider49:0<0,53,1>-Mtx 7 D1
+slider50:0<0,53,1>-Mtx 7 D2
+
+// Matrix 8 Parameters
+slider51:0<0,27,1>-Mtx 8 Source
+slider52:0<0,34.00,0.01>-Mtx 8 Multiplier
+slider53:0<0,53,1>-Mtx 8 D1
+slider54:0<0,53,1>-Mtx 8 D2
+
+// Matrix 9 Parameters
+slider55:0<0,27,1>-Mtx 9 Source
+slider56:0<0,34.00,0.01>-Mtx 9 Multiplier
+slider57:0<0,53,1>-Mtx 9 D1
+slider58:0<0,53,1>-Mtx 9 D2
+
+// Matrix 10 Parameters
+slider59:0<0,27,1>-Mtx 10 Source
+slider60:0<0,34.00,0.01>-Mtx 10 Multiplier
+slider61:0<0,53,1>-Mtx 10 D1
+slider62:0<0,53,1>-Mtx 10 D2
+
+// Matrix 11 Parameters
+slider63:0<0,27,1>-Mtx 11 Source
+slider64:0<0,34.00,0.01>-Mtx 11 Multiplier
+slider65:0<0,53,1>-Mtx 11 D1
+slider66:0<0,53,1>-Mtx 11 D2
+
+// Matrix 12 Parameters
+slider67:0<0,27,1>-Mtx 12 Source
+slider68:0<0,34.00,0.01>-Mtx 12 Multiplier
+slider69:0<0,53,1>-Mtx 12 D1
+slider70:0<0,53,1>-Mtx 12 D2
+
+// Filter Parameters
+slider71:0<0,48,1>-Filter Type
+slider72:0<0,100,1>-Filter Param 1
+slider73:0<0,100,1>-Filter Param 2
+slider74:0<0,2.00,0.01>-Filter Gain
+
+// ARP Parameters
+slider75:0<0,2,1{Internal,External,Auto}>-ARP Clock
+slider76:0<0,2.00,0.01>-ARP BPM
+slider77:0<0,11,1>-ARP Direction
+slider78:0<0,3,1>-ARP Octave
+slider79:0<0,25,1>-ARP Pattern
+slider80:0<0,16,1>-ARP Division
+slider81:0<0,16,1>-ARP Duration
+slider82:0<0,1,1{Off,On}>-ARP Latch
+
+// Free Envelope 1
+slider83:0<0,16.00,0.01>-Free Env 1 A
+slider84:0<0,16.00,0.01>-Free Env 1 D
+slider85:0<0,100,1>-Free Env 1 S
+slider86:0<0,16.00,0.01>-Free Env 1 R
+
+// Free Envelope 2
+slider87:0<0,16.00,0.01>-Free Env 2 Silence
+slider88:0<0,16.00,0.01>-Free Env 2 A
+slider89:0<0,16.00,0.01>-Free Env 2 D
+slider90:0<0,2,1{Loop1,Loop2,Loop3}>-Free Env 2 Loop
+
+in_pin: none
+out_pin: none
+
+@init
+  freemem = ui_setup(0);
+
+  chanout = slider(0);
+
+  params = 90;
+
+  nrpn_msb_start   = 0;
+  nrpn_lsb_start   = 200;
+  param_max_start  = 400;
+  valmsb_start     = 600;
+  vallsb_start     = 800;
+  valmsb_pre_start = 1000;
+  vallsb_pre_start = 1200;
+
+  nrpn_msb_start[1] = 10;  nrpn_lsb_start[1] = 72;  param_max_start[1] = 258;    // Note 1 Before
+  nrpn_msb_start[2] = 1;  nrpn_lsb_start[2] = 73;  param_max_start[2] = 127;  // Note 1 BreakNote
+  nrpn_msb_start[3] = 1;  nrpn_lsb_start[3] = 74;  param_max_start[3] = 6;    // Note 1 After
+  nrpn_msb_start[4] = 1;  nrpn_lsb_start[4] = 76;  param_max_start[4] = 6;    // Note 2 Before
+  nrpn_msb_start[5] = 1;  nrpn_lsb_start[5] = 77;  param_max_start[5] = 127;  // Note 2 BreakNote
+  nrpn_msb_start[6] = 1;  nrpn_lsb_start[6] = 78;  param_max_start[6] = 6;    // Note 2 After
+
+  nrpn_msb_start[7]  = 1;  nrpn_lsb_start[7]  = 40;  param_max_start[7]  = 7;    // LFO 1 Shape
+  nrpn_msb_start[8]  = 1;  nrpn_lsb_start[8]  = 41;  param_max_start[8]  = 127;  // LFO 1 Frequency
+  nrpn_msb_start[9]  = 1;  nrpn_lsb_start[9]  = 42;  param_max_start[9]  = 200;  // LFO 1 Bias
+  nrpn_msb_start[10] = 1;  nrpn_lsb_start[10] = 43;  param_max_start[10] = 1600; // LFO 1 Ksyn  (0.00–16.00→0–1600)
+  nrpn_msb_start[11] = 1;  nrpn_lsb_start[11] = 68;  param_max_start[11] = 100;  // LFO 1 Phase
+
+  nrpn_msb_start[12] = 1;  nrpn_lsb_start[12] = 44;  param_max_start[12] = 7;    // LFO 2 Shape
+  nrpn_msb_start[13] = 1;  nrpn_lsb_start[13] = 45;  param_max_start[13] = 127;  // LFO 2 Frequency
+  nrpn_msb_start[14] = 1;  nrpn_lsb_start[14] = 46;  param_max_start[14] = 200;  // LFO 2 Bias
+  nrpn_msb_start[15] = 1;  nrpn_lsb_start[15] = 47;  param_max_start[15] = 1600; // LFO 2 Ksyn
+  nrpn_msb_start[16] = 1;  nrpn_lsb_start[16] = 69;  param_max_start[16] = 100;  // LFO 2 Phase
+
+  nrpn_msb_start[17] = 1;  nrpn_lsb_start[17] = 48;  param_max_start[17] = 7;    // LFO 3 Shape
+  nrpn_msb_start[18] = 1;  nrpn_lsb_start[18] = 49;  param_max_start[18] = 127;  // LFO 3 Frequency
+  nrpn_msb_start[19] = 1;  nrpn_lsb_start[19] = 50;  param_max_start[19] = 200;  // LFO 3 Bias
+  nrpn_msb_start[20] = 1;  nrpn_lsb_start[20] = 51;  param_max_start[20] = 1600; // LFO 3 Ksyn
+  nrpn_msb_start[21] = 1;  nrpn_lsb_start[21] = 70;  param_max_start[21] = 100;  // LFO 3 Phase
+
+  nrpn_msb_start[22] = 0;  nrpn_lsb_start[22] = 116; param_max_start[22] = 27;   // Mtx 1 Source (0–27)
+  nrpn_msb_start[23] = 0;  nrpn_lsb_start[23] = 117; param_max_start[23] = 3400; // Mtx 1 Multiplier (0.00–34.00→0–3400)
+  nrpn_msb_start[24] = 0;  nrpn_lsb_start[24] = 118; param_max_start[24] = 53;   // Mtx 1 D1
+  nrpn_msb_start[25] = 0;  nrpn_lsb_start[25] = 119; param_max_start[25] = 53;   // Mtx 1 D2
+
+  nrpn_msb_start[26] = 0;  nrpn_lsb_start[26] = 120; param_max_start[26] = 27;   // Mtx 2 Source
+  nrpn_msb_start[27] = 0;  nrpn_lsb_start[27] = 121; param_max_start[27] = 3400; // Mtx 2 Multiplier
+  nrpn_msb_start[28] = 0;  nrpn_lsb_start[28] = 122; param_max_start[28] = 53;   // Mtx 2 D1
+  nrpn_msb_start[29] = 0;  nrpn_lsb_start[29] = 123; param_max_start[29] = 53;   // Mtx 2 D2
+
+  nrpn_msb_start[30] = 0;  nrpn_lsb_start[30] = 124; param_max_start[30] = 27;   // Mtx 3 Source
+  nrpn_msb_start[31] = 0;  nrpn_lsb_start[31] = 125; param_max_start[31] = 3400; // Mtx 3 Multiplier
+  nrpn_msb_start[32] = 0;  nrpn_lsb_start[32] = 126; param_max_start[32] = 53;   // Mtx 3 D1
+  nrpn_msb_start[33] = 0;  nrpn_lsb_start[33] = 127; param_max_start[33] = 53;   // Mtx 3 D2
+
+  nrpn_msb_start[34] = 1;  nrpn_lsb_start[34] =  0;  param_max_start[34] = 27;   // Mtx 4 Source
+  nrpn_msb_start[35] = 1;  nrpn_lsb_start[35] =  1;  param_max_start[35] = 3400; // Mtx 4 Multiplier
+  nrpn_msb_start[36] = 1;  nrpn_lsb_start[36] =  2;  param_max_start[36] = 53;   // Mtx 4 D1
+  nrpn_msb_start[37] = 1;  nrpn_lsb_start[37] =  3;  param_max_start[37] = 53;   // Mtx 4 D2
+
+  nrpn_msb_start[38] = 1;  nrpn_lsb_start[38] =  4;  param_max_start[38] = 27;   // Mtx 5 Source
+  nrpn_msb_start[39] = 1;  nrpn_lsb_start[39] =  5;  param_max_start[39] = 3400; // Mtx 5 Multiplier
+  nrpn_msb_start[40] = 1;  nrpn_lsb_start[40] =  6;  param_max_start[40] = 53;   // Mtx 5 D1
+  nrpn_msb_start[41] = 1;  nrpn_lsb_start[41] =  7;  param_max_start[41] = 53;   // Mtx 5 D2
+
+  nrpn_msb_start[42] = 1;  nrpn_lsb_start[42] =  8;  param_max_start[42] = 27;   // Mtx 6 Source
+  nrpn_msb_start[43] = 1;  nrpn_lsb_start[43] =  9;  param_max_start[43] = 3400; // Mtx 6 Multiplier
+  nrpn_msb_start[44] = 1;  nrpn_lsb_start[44] = 10;  param_max_start[44] = 53;   // Mtx 6 D1
+  nrpn_msb_start[45] = 1;  nrpn_lsb_start[45] = 11;  param_max_start[45] = 53;   // Mtx 6 D2
+
+  nrpn_msb_start[46] = 1;  nrpn_lsb_start[46] = 12;  param_max_start[46] = 27;   // Mtx 7 Source
+  nrpn_msb_start[47] = 1;  nrpn_lsb_start[47] = 13;  param_max_start[47] = 3400; // Mtx 7 Multiplier
+  nrpn_msb_start[48] = 1;  nrpn_lsb_start[48] = 14;  param_max_start[48] = 53;   // Mtx 7 D1
+  nrpn_msb_start[49] = 1;  nrpn_lsb_start[49] = 15;  param_max_start[49] = 53;   // Mtx 7 D2
+
+  nrpn_msb_start[50] = 1;  nrpn_lsb_start[50] = 16;  param_max_start[50] = 27;   // Mtx 8 Source
+  nrpn_msb_start[51] = 1;  nrpn_lsb_start[51] = 17;  param_max_start[51] = 3400; // Mtx 8 Multiplier
+  nrpn_msb_start[52] = 1;  nrpn_lsb_start[52] = 18;  param_max_start[52] = 53;   // Mtx 8 D1
+  nrpn_msb_start[53] = 1;  nrpn_lsb_start[53] = 19;  param_max_start[53] = 53;   // Mtx 8 D2
+
+  nrpn_msb_start[54] = 1;  nrpn_lsb_start[54] = 20;  param_max_start[54] = 27;   // Mtx 9 Source
+  nrpn_msb_start[55] = 1;  nrpn_lsb_start[55] = 21;  param_max_start[55] = 3400; // Mtx 9 Multiplier
+  nrpn_msb_start[56] = 1;  nrpn_lsb_start[56] = 22;  param_max_start[56] = 53;   // Mtx 9 D1
+  nrpn_msb_start[57] = 1;  nrpn_lsb_start[57] = 23;  param_max_start[57] = 53;   // Mtx 9 D2
+
+  nrpn_msb_start[58] = 1;  nrpn_lsb_start[58] = 24;  param_max_start[58] = 27;   // Mtx 10 Source
+  nrpn_msb_start[59] = 1;  nrpn_lsb_start[59] = 25;  param_max_start[59] = 3400; // Mtx 10 Multiplier
+  nrpn_msb_start[60] = 1;  nrpn_lsb_start[60] = 26;  param_max_start[60] = 53;   // Mtx 10 D1
+  nrpn_msb_start[61] = 1;  nrpn_lsb_start[61] = 27;  param_max_start[61] = 53;   // Mtx 10 D2
+
+  nrpn_msb_start[62] = 1;  nrpn_lsb_start[62] = 28;  param_max_start[62] = 27;   // Mtx 11 Source
+  nrpn_msb_start[63] = 1;  nrpn_lsb_start[63] = 29;  param_max_start[63] = 3400; // Mtx 11 Multiplier
+  nrpn_msb_start[64] = 1;  nrpn_lsb_start[64] = 30;  param_max_start[64] = 53;   // Mtx 11 D1
+  nrpn_msb_start[65] = 1;  nrpn_lsb_start[65] = 31;  param_max_start[65] = 53;   // Mtx 11 D2
+
+  nrpn_msb_start[66] = 1;  nrpn_lsb_start[66] = 32;  param_max_start[66] = 27;   // Mtx 12 Source
+  nrpn_msb_start[67] = 1;  nrpn_lsb_start[67] = 33;  param_max_start[67] = 3400; // Mtx 12 Multiplier
+  nrpn_msb_start[68] = 1;  nrpn_lsb_start[68] = 34;  param_max_start[68] = 53;   // Mtx 12 D1
+  nrpn_msb_start[69] = 1;  nrpn_lsb_start[69] = 35;  param_max_start[69] = 53;   // Mtx 12 D2
+
+  nrpn_msb_start[70] = 0;  nrpn_lsb_start[70] = 40;  param_max_start[70] = 48;   // Filter Type
+  nrpn_msb_start[71] = 0;  nrpn_lsb_start[71] = 41;  param_max_start[71] = 100;  // Filter Param 1
+  nrpn_msb_start[72] = 0;  nrpn_lsb_start[72] = 42;  param_max_start[72] = 100;  // Filter Param 2
+  nrpn_msb_start[73] = 0;  nrpn_lsb_start[73] = 43;  param_max_start[73] = 200;  // Filter Gain (0.00–2.00→0–200)
+
+  nrpn_msb_start[74] = 0;  nrpn_lsb_start[74] = 28;  param_max_start[74] = 2;    // ARP Clock
+  nrpn_msb_start[75] = 0;  nrpn_lsb_start[75] = 29;  param_max_start[75] = 200;  // ARP BPM   (0.00–2.00→0–200)
+  nrpn_msb_start[76] = 0;  nrpn_lsb_start[76] = 30;  param_max_start[76] = 11;   // ARP Direction
+  nrpn_msb_start[77] = 0;  nrpn_lsb_start[77] = 31;  param_max_start[77] = 3;    // ARP Octave
+  nrpn_msb_start[78] = 0;  nrpn_lsb_start[78] = 32;  param_max_start[78] = 25;   // ARP Pattern
+  nrpn_msb_start[79] = 0;  nrpn_lsb_start[79] = 33;  param_max_start[79] = 16;   // ARP Division
+  nrpn_msb_start[80] = 0;  nrpn_lsb_start[80] = 34;  param_max_start[80] = 16;   // ARP Duration
+  nrpn_msb_start[81] = 0;  nrpn_lsb_start[81] = 35;  param_max_start[81] = 1;    // ARP Latch
+
+  nrpn_msb_start[82] = 1;  nrpn_lsb_start[82] = 52;  param_max_start[82] = 1600; // Free Env 1 A   (0.00–16.00→0–1600)
+  nrpn_msb_start[83] = 1;  nrpn_lsb_start[83] = 53;  param_max_start[83] = 1600; // Free Env 1 D
+  nrpn_msb_start[84] = 1;  nrpn_lsb_start[84] = 54;  param_max_start[84] = 100;  // Free Env 1 S   (0–100)
+  nrpn_msb_start[85] = 1;  nrpn_lsb_start[85] = 55;  param_max_start[85] = 1600; // Free Env 1 R
+
+  nrpn_msb_start[86] = 1;  nrpn_lsb_start[86] = 56;  param_max_start[86] = 1600; // Free Env 2 Silence
+  nrpn_msb_start[87] = 1;  nrpn_lsb_start[87] = 57;  param_max_start[87] = 1600; // Free Env 2 A
+  nrpn_msb_start[88] = 1;  nrpn_lsb_start[88] = 58;  param_max_start[88] = 1600; // Free Env 2 D
+  nrpn_msb_start[89] = 1;  nrpn_lsb_start[89] = 59;  param_max_start[89] = 2;    // Free Env 2 Loop
+
+function display_to_midi(param_index, display_val)
+(
+  // === Midi CH
+  param_index == 0 
+    ? display_val
+
+  // === LFO Ksyn: i==10,15,20 (0.00–16.00 → 0–1600)
+  : (param_index == 10 || param_index == 15 || param_index == 20) 
+    ? (display_val * 100)
+
+  // === Matrix Multiplier: i==23,27,31,35,39,43,47,51,55,59,63,67 (0.00–34.00→0–3400)
+  : (param_index == 23 || param_index == 27 || param_index == 31 || param_index == 35
+     || param_index == 39 || param_index == 43 || param_index == 47 || param_index == 51
+     || param_index == 55 || param_index == 59 || param_index == 63 || param_index == 67)
+    ? (display_val * 100)
+
+  // === Filter Gain: i==73 (0.00–2.00 → 0–200)
+  : (param_index == 73) 
+    ? (display_val * 100)
+
+  // === ARP BPM: i==75 (0.00–2.00 → 0–200)
+  : (param_index == 75) 
+    ? (display_val * 100)
+
+  // === Free Env 1 A/D/R: i==82,83,85 (0.00–16.00 → 0–1600)
+  : (param_index == 82 || param_index == 83 || param_index == 85) 
+    ? (display_val * 100)
+
+  // === Free Env 2 Silence/A/D: i==86,87,88 (0.00–16.00 → 0–1600)
+  : (param_index == 86 || param_index == 87 || param_index == 88) 
+    ? (display_val * 100)
+
+  : display_val
+);
+
+@slider
+// Calculate NRPN values for all parameters
+i=0;
+loop(params,
+  // Get slider value
+  slider_val = slider(i+1);
+  
+  // Convert display value to MIDI value
+  midi_val = display_to_midi(i, slider_val);
+  
+  // Clamp to valid range
+  midi_val = max(0, min(midi_val, param_max_start[i]));
+  
+  // Convert to 14-bit NRPN: MSB = bits 7-13, LSB = bits 0-6
+  valmsb_start[i] = floor(midi_val / 128);
+  vallsb_start[i] = midi_val % 128;
+  
+  i += 1;
+);
+
+
+@sample
+  offset = 0;
+  i = 0;
+  loop(params,
+    i > 0 && ((valmsb_start[i] != valmsb_pre_start[i]) || (vallsb_start[i] != vallsb_pre_start[i])) ?
+    (
+      midi_cc99_val = (i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i == 8 || i == 9 || i == 10) ? 1 : nrpn_msb_start[i];
+      
+      midisend(offset, $xB0 + chanout, 99, midi_cc99_val); // CC#99 (NRPN MSB Address)
+      midisend(offset, $xB0 + chanout, 98, nrpn_lsb_start[i]); // CC#98 (NRPN LSB Address)
+
+      midisend(offset, $xB0 + chanout, 6, valmsb_start[i]); // CC#06 (NRPN MSB Value)
+      midisend(offset, $xB0 + chanout, 38, vallsb_start[i]); // CC#38 (NRPN LSB Value)
+
+      valmsb_pre_start[i] = valmsb_start[i];
+      vallsb_pre_start[i] = vallsb_start[i];
+    );
+    i += 1;
+  );
+
+@gfx
+  ui_start();
+  chanout = control_dial(chanout, 0, 15);
+
+@serialize
+  file_var(0, chanout);

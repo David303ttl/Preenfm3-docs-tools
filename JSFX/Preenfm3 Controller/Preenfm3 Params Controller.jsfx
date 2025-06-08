@@ -1,0 +1,355 @@
+//––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––------------------------------------------------------------------------––––//
+// version: 0.1
+// desc:Preenfm3 Params Controller 
+// author: Davidttl
+// options: gmem=AlgorithmSelect
+//
+// A simple controller for Preenfm3. This one is for FM, operators and envelopes. 
+// All parameters are available for modulation, the UI for this is not needed. 
+// Only the slider for midi channel selection is visible, all others are commented out with '-'. 
+// Some of the ranges are clipped, but this is easy to find and modify. Some of the parameters I had to enter statically, as much as my skills allow. 
+// I needed an effect so that I could modulate the parameters and jsfx turned out to be the easiest solution. 
+// Many thanks to: Xavier Hosxe for making this fantastic synth; the entire Reaper team - great tool, scripting and jsfx is a whole other level!
+//–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––-------------------------------------------------------------------------–––//
+
+import ui-lib.jsfx-inc
+
+// Global Parameters 
+// Only slider1 visible
+slider1:chanout=0<0,15,1{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}>MIDI Output Channel
+
+// Rest of sliders commented with '-'
+slider2:0<0,31,1{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32}>-Algorithm Number
+slider3:0<0,16,1>-Velocity
+slider4:0<0,2,1{Mono,Poly,Unison}>-Mode
+slider5:0<0,12,1>-Glide Speed
+
+// IM Parameters  
+slider6:0<0,16,0.01>-IM 1 
+slider7:0<0,16,0.01>-IM 2 
+slider8:0<0,16,0.01>-IM 3
+slider9:0<0,16,0.01>-IM 4
+slider10:0<0,16,0.01>-IM 5
+slider11:0<0,100,1>-Feedback
+slider12:0<0,16,0.01>-IM 1 V
+slider13:0<0,16,0.01>-IM 2 V
+slider14:0<0,16,0.01>-IM 3 V
+slider15:0<0,16,0.01>-IM 4 V
+slider16:0<0,16,0.01>-IM 5 V
+slider17:0<0,100,1>-Feedback V
+
+// Mix & Pan Parameters
+slider18:0<0,100,1>-Mix 1
+slider19:0<0,100,1>-Mix 2
+slider20:0<0,100,1>-Mix 3
+slider21:0<0,100,1>-Mix 4
+slider22:0<0,100,1>-Mix 5
+slider23:0<0,100,1>-Mix 6
+slider24:0<-100,100,1>-Pan 1
+slider25:0<-100,100,1>-Pan 2
+slider26:0<-100,100,1>-Pan 3
+slider27:0<-100,100,1>-Pan 4
+slider28:0<-100,100,1>-Pan 5
+slider29:0<-100,100,1>-Pan 6
+
+// Op1 Parameters
+slider30:0<0,13,1{sin,saw,squa,s^2,sine0,sine,rand,off,usr1,usr2,usr3,usr4,usr5,usr6}>-Op 1 Shape
+slider31:0<0,2,1{keyb,fixed,kehz}>-Op 1 Freq Type
+slider32:0<0,16,0.01>-Op 1 Frequency
+slider33:0<-9,9,0.01>-Op 1 Fine Tune
+slider34:0<0,16,0.01>-Op 1 A
+slider35:0<0,16,0.01>-Op 1 D
+slider36:0<0,16,0.01>-Op 1 S
+slider37:0<0,16,0.01>-Op 1 R
+slider38:0<0,100,1>-Op 1 L1
+slider39:0<0,100,1>-Op 1 L2
+slider40:0<0,100,1>-Op 1 L3
+slider41:0<0,100,1>-Op 1 L4
+
+// Op2 Parameters
+slider42:0<0,13,1{sin,saw,squa,s^2,sine0,sine,rand,off,usr1,usr2,usr3,usr4,usr5,usr6}>-Op 2 Shape
+slider43:0<0,2,1{keyb,fixed,kehz}>-Op 2 Freq Type
+slider44:0<0,16,0.01>-Op 2 Frequency 
+slider45:0<-9,9,0.01>-Op 2 Fine Tune 
+slider46:0<0,16,0.01>-Op 2 A
+slider47:0<0,16,0.01>-Op 2 D 
+slider48:0<0,16,0.01>-Op 2 S 
+slider49:0<0,16,0.01>-Op 2 R 
+slider50:0<0,100,1>-Op 2 L1
+slider51:0<0,100,1>-Op 2 L2
+slider52:0<0,100,1>-Op 2 L3
+slider53:0<0,100,1>-Op 2 L4
+
+// Op3 Parameters
+slider54:0<0,13,1{sin,saw,squa,s^2,sine0,sine,rand,off,usr1,usr2,usr3,usr4,usr5,usr6}>-Op 3 Shape
+slider55:0<0,2,1{keyb,fixed,kehz}>-Op 3 Freq Type
+slider56:0<0,16,0.01>-Op 3 Frequency 
+slider57:0<-9,9,0.01>-Op 3 Fine Tune 
+slider58:0<0,16,0.01>-Op 3 A
+slider59:0<0,16,0.01>-Op 3 D
+slider60:0<0,16,0.01>-Op 3 S
+slider61:0<0,16,0.01>-Op 3 R
+slider62:0<0,100,1>-Op 3 L1
+slider63:0<0,100,1>-Op 3 L2
+slider64:0<0,100,1>-Op 3 L3
+slider65:0<0,100,1>-Op 3 L4
+
+// Op4 Parameters
+slider66:0<0,13,1{sin,saw,squa,s^2,sine0,sine,rand,off,usr1,usr2,usr3,usr4,usr5,usr6}>-Op 4 Shape
+slider67:0<0,2,1{keyb,fixed,kehz}>-Op 4 Freq Type
+slider68:0<0,16,0.01>-Op 4 Frequency 
+slider69:0<-9,9,0.01>-Op 4 Fine Tune 
+slider70:0<0,16,0.01>-Op 4 A 
+slider71:0<0,16,0.01>-Op 4 D 
+slider72:0<0,16,0.01>-Op 4 S 
+slider73:0<0,16,0.01>-Op 4 R 
+slider74:0<0,100,1>-Op 4 L1
+slider75:0<0,100,1>-Op 4 L2
+slider76:0<0,100,1>-Op 4 L3
+slider77:0<0,100,1>-Op 4 L4
+
+// Op5 Parameters 
+slider78:0<0,13,1{sin,saw,squa,s^2,sine0,sine,rand,off,usr1,usr2,usr3,usr4,usr5,usr6}>-Op 5 Shape
+slider79:0<0,2,1{keyb,fixed,kehz}>-Op 5 Freq Type
+slider80:0<0,16,0.01>-Op 5 Frequency
+slider81:0<-9,9,0.01>-Op 5 Fine Tune 
+slider82:0<0,16,0.01>-Op 5 A 
+slider83:0<0,16,0.01>-Op 5 D 
+slider84:0<0,16,0.01>-Op 5 S 
+slider85:0<0,16,0.01>-Op 5 R 
+slider86:0<0,100,1>-Op 5 L1
+slider87:0<0,100,1>-Op 5 L2
+slider88:0<0,100,1>-Op 5 L3
+slider89:0<0,100,1>-Op 5 L4
+
+// Op6 Parameters
+slider90:0<0,13,1{sin,saw,squa,s^2,sine0,sine,rand,off,usr1,usr2,usr3,usr4,usr5,usr6}>-Op 6 Shape 
+slider91:0<0,2,1{keyb,fixed,kehz}>-Op 6 Freq Type
+slider92:0<0,16,0.01>-Op 6 Frequency 
+slider93:0<-9,9,0.01>-Op 6 Fine Tune 
+slider94:0<0,16,0.01>-Op 6 A 
+slider95:0<0,16,0.01>-Op 6 D 
+slider96:0<0,16,0.01>-Op 6 S 
+slider97:0<0,16,0.01>-Op 6 R 
+slider98:0<0,100,1>-Op 6 L1
+slider99:0<0,100,1>-Op 6 L2
+slider100:0<0,100,1>-Op 6 L3
+slider101:0<0,100,1>-Op 6 L4
+
+slider102:0<0,2,1>-Glide Type
+slider103:25<0,100,1>-Unison Spread
+slider104:100<0,200,1>-Unison Detune
+
+// PULL
+slider105:0<0,1,0>PULL
+
+in_pin: none
+out_pin: none
+
+@init
+// freemem for UI
+freemem = ui_setup(0);
+chanout = slider(0);
+
+// Total parameters   
+params = 105;
+
+// Define memory locations for arrays  
+nrpn_msb_start   = 0;
+nrpn_lsb_start   = 200;
+param_max_start  = 400;
+valmsb_start     = 600;
+vallsb_start     = 800;
+valmsb_pre_start = 1000;
+vallsb_pre_start = 1200;
+
+// Hard-coded NRPN values - ALL MSB = 0
+
+// Global Parameters (now indices 1-4)
+nrpn_msb_start[1] = 0; nrpn_lsb_start[1] = 0; param_max_start[1] = 31;    // Algorithm (slider2)
+nrpn_msb_start[2] = 0; nrpn_lsb_start[2] = 1; param_max_start[2] = 16;    // Velocity (slider3)
+nrpn_msb_start[3] = 0; nrpn_lsb_start[3] = 2; param_max_start[3] = 2;     // Mode (slider4)
+nrpn_msb_start[4] = 0; nrpn_lsb_start[4] = 3; param_max_start[4] = 12;    // Glide Speed (slider5)
+
+// IM Parameters (slider6–17 → index 5-16)
+nrpn_msb_start[5]  = 0; nrpn_lsb_start[5]  = 4;  param_max_start[5]  = 1600; // IM1 (slider6)
+nrpn_msb_start[6]  = 0; nrpn_lsb_start[6]  = 6;  param_max_start[6]  = 1600; // IM2 (slider7)
+nrpn_msb_start[7]  = 0; nrpn_lsb_start[7]  = 8;  param_max_start[7]  = 1600; // IM3 (slider8)
+nrpn_msb_start[8]  = 0; nrpn_lsb_start[8]  = 10; param_max_start[8]  = 1600; // IM4 (slider9)
+nrpn_msb_start[9]  = 0; nrpn_lsb_start[9]  = 12; param_max_start[9]  = 1600; // IM5 (slider10)
+nrpn_msb_start[10] = 0; nrpn_lsb_start[10] = 14; param_max_start[10] = 100;  // Feedback (slider11)
+nrpn_msb_start[11] = 0; nrpn_lsb_start[11] = 5;  param_max_start[11] = 1600; // IM1 Velocity (slider12)
+nrpn_msb_start[12] = 0; nrpn_lsb_start[12] = 7;  param_max_start[12] = 1600; // IM2 Velocity (slider13)
+nrpn_msb_start[13] = 0; nrpn_lsb_start[13] = 9;  param_max_start[13] = 1600; // IM3 Velocity (slider14)
+nrpn_msb_start[14] = 0; nrpn_lsb_start[14] = 11; param_max_start[14] = 1600; // IM4 Velocity (slider15)
+nrpn_msb_start[15] = 0; nrpn_lsb_start[15] = 13; param_max_start[15] = 1600; // IM5 Velocity (slider16)
+nrpn_msb_start[16] = 0; nrpn_lsb_start[16] = 15; param_max_start[16] = 100;  // Feedback Velocity (slider17)
+
+// Mix & Pan Parameters (slider18–29 → index 17-28)
+nrpn_msb_start[17] = 0; nrpn_lsb_start[17] = 16; param_max_start[17] = 100; // Mix1 (slider18)
+nrpn_msb_start[18] = 0; nrpn_lsb_start[18] = 18; param_max_start[18] = 100; // Mix2 (slider19)
+nrpn_msb_start[19] = 0; nrpn_lsb_start[19] = 20; param_max_start[19] = 100; // Mix3 (slider20)
+nrpn_msb_start[20] = 0; nrpn_lsb_start[20] = 22; param_max_start[20] = 100; // Mix4 (slider21)
+nrpn_msb_start[21] = 0; nrpn_lsb_start[21] = 24; param_max_start[21] = 100; // Mix5 (slider22)
+nrpn_msb_start[22] = 0; nrpn_lsb_start[22] = 26; param_max_start[22] = 100; // Mix6 (slider23)
+nrpn_msb_start[23] = 0; nrpn_lsb_start[23] = 17; param_max_start[23] = 200; // Pan1 (slider24)
+nrpn_msb_start[24] = 0; nrpn_lsb_start[24] = 19; param_max_start[24] = 200; // Pan2 (slider25)
+nrpn_msb_start[25] = 0; nrpn_lsb_start[25] = 21; param_max_start[25] = 200; // Pan3 (slider26)
+nrpn_msb_start[26] = 0; nrpn_lsb_start[26] = 23; param_max_start[26] = 200; // Pan4 (slider27)
+nrpn_msb_start[27] = 0; nrpn_lsb_start[27] = 25; param_max_start[27] = 200; // Pan5 (slider28)
+nrpn_msb_start[28] = 0; nrpn_lsb_start[28] = 27; param_max_start[28] = 200; // Pan6 (slider29)
+
+// Op1 Parameters (slider30–41 → index 29-40)
+nrpn_msb_start[29] = 0; nrpn_lsb_start[29] = 44; param_max_start[29] = 13;   // Op1 Shape (slider30)
+nrpn_msb_start[30] = 0; nrpn_lsb_start[30] = 45; param_max_start[30] = 2;    // Op1 Freq Type (slider31)
+nrpn_msb_start[31] = 0; nrpn_lsb_start[31] = 46; param_max_start[31] = 1600; // Op1 Frequency (slider32)
+nrpn_msb_start[32] = 0; nrpn_lsb_start[32] = 47; param_max_start[32] = 1800; // Op1 Fine Tune (slider33)
+nrpn_msb_start[33] = 0; nrpn_lsb_start[33] = 68; param_max_start[33] = 1600; // Op1 Env Attack (slider34)
+nrpn_msb_start[34] = 0; nrpn_lsb_start[34] = 70; param_max_start[34] = 1600; // Op1 Env Decay (slider35)
+nrpn_msb_start[35] = 0; nrpn_lsb_start[35] = 72; param_max_start[35] = 1600; // Op1 Env Sustain (slider36)
+nrpn_msb_start[36] = 0; nrpn_lsb_start[36] = 74; param_max_start[36] = 1600; // Op1 Env Release (slider37)
+nrpn_msb_start[37] = 0; nrpn_lsb_start[37] = 69; param_max_start[37] = 100;  // Op1 Env Attack Level (slider38)
+nrpn_msb_start[38] = 0; nrpn_lsb_start[38] = 71; param_max_start[38] = 100;  // Op1 Env Decay Level (slider39)
+nrpn_msb_start[39] = 0; nrpn_lsb_start[39] = 73; param_max_start[39] = 100;  // Op1 Env Sustain Level (slider40)
+nrpn_msb_start[40] = 0; nrpn_lsb_start[40] = 75; param_max_start[40] = 100;  // Op1 Env Release Level (slider41)
+
+// Op2 Parameters (slider42–53 → index 41-52)
+nrpn_msb_start[41] = 0; nrpn_lsb_start[41] = 48; param_max_start[41] = 13;   // Op2 Shape (slider42)
+nrpn_msb_start[42] = 0; nrpn_lsb_start[42] = 49; param_max_start[42] = 2;    // Op2 Freq Type (slider43)
+nrpn_msb_start[43] = 0; nrpn_lsb_start[43] = 50; param_max_start[43] = 1600; // Op2 Frequency (slider44)
+nrpn_msb_start[44] = 0; nrpn_lsb_start[44] = 51; param_max_start[44] = 1800; // Op2 Fine Tune (slider45)
+nrpn_msb_start[45] = 0; nrpn_lsb_start[45] = 76; param_max_start[45] = 1600; // Op2 Env Attack (slider46)
+nrpn_msb_start[46] = 0; nrpn_lsb_start[46] = 78; param_max_start[46] = 1600; // Op2 Env Decay (slider47)
+nrpn_msb_start[47] = 0; nrpn_lsb_start[47] = 80; param_max_start[47] = 1600; // Op2 Env Sustain (slider48)
+nrpn_msb_start[48] = 0; nrpn_lsb_start[48] = 82; param_max_start[48] = 1600; // Op2 Env Release (slider49)
+nrpn_msb_start[49] = 0; nrpn_lsb_start[49] = 77; param_max_start[49] = 100;  // Op2 Env Attack Level (slider50)
+nrpn_msb_start[50] = 0; nrpn_lsb_start[50] = 79; param_max_start[50] = 100;  // Op2 Env Decay Level (slider51)
+nrpn_msb_start[51] = 0; nrpn_lsb_start[51] = 81; param_max_start[51] = 100;  // Op2 Env Sustain Level (slider52)
+nrpn_msb_start[52] = 0; nrpn_lsb_start[52] = 83; param_max_start[52] = 100;  // Op2 Env Release Level (slider53)
+
+// Op3 Parameters (slider54–65 → index 53-64)
+nrpn_msb_start[53] = 0; nrpn_lsb_start[53] = 52; param_max_start[53] = 13;   // Op3 Shape (slider54)
+nrpn_msb_start[54] = 0; nrpn_lsb_start[54] = 53; param_max_start[54] = 2;    // Op3 Freq Type (slider55)
+nrpn_msb_start[55] = 0; nrpn_lsb_start[55] = 54; param_max_start[55] = 1600; // Op3 Frequency (slider56)
+nrpn_msb_start[56] = 0; nrpn_lsb_start[56] = 55; param_max_start[56] = 1800; // Op3 Fine Tune (slider57)
+nrpn_msb_start[57] = 0; nrpn_lsb_start[57] = 84; param_max_start[57] = 1600; // Op3 Env Attack (slider58)
+nrpn_msb_start[58] = 0; nrpn_lsb_start[58] = 86; param_max_start[58] = 1600; // Op3 Env Decay (slider59)
+nrpn_msb_start[59] = 0; nrpn_lsb_start[59] = 88; param_max_start[59] = 1600; // Op3 Env Sustain (slider60)
+nrpn_msb_start[60] = 0; nrpn_lsb_start[60] = 90; param_max_start[60] = 1600; // Op3 Env Release (slider61)
+nrpn_msb_start[61] = 0; nrpn_lsb_start[61] = 85; param_max_start[61] = 100;  // Op3 Env Attack Level (slider62)
+nrpn_msb_start[62] = 0; nrpn_lsb_start[62] = 87; param_max_start[62] = 100;  // Op3 Env Decay Level (slider63)
+nrpn_msb_start[63] = 0; nrpn_lsb_start[63] = 89; param_max_start[63] = 100;  // Op3 Env Sustain Level (slider64)
+nrpn_msb_start[64] = 0; nrpn_lsb_start[64] = 91; param_max_start[64] = 100;  // Op3 Env Release Level (slider65)
+
+// Op4 Parameters (slider66–77 → index 65-76)
+nrpn_msb_start[65] = 0; nrpn_lsb_start[65] = 56; param_max_start[65] = 13;   // Op4 Shape (slider66)
+nrpn_msb_start[66] = 0; nrpn_lsb_start[66] = 57; param_max_start[66] = 2;    // Op4 Freq Type (slider67)
+nrpn_msb_start[67] = 0; nrpn_lsb_start[67] = 58; param_max_start[67] = 1600; // Op4 Frequency (slider68)
+nrpn_msb_start[68] = 0; nrpn_lsb_start[68] = 59; param_max_start[68] = 1800; // Op4 Fine Tune (slider69)
+nrpn_msb_start[69] = 0; nrpn_lsb_start[69] = 92; param_max_start[69] = 1600; // Op4 Env Attack (slider70)
+nrpn_msb_start[70] = 0; nrpn_lsb_start[70] = 94; param_max_start[70] = 1600; // Op4 Env Decay (slider71)
+nrpn_msb_start[71] = 0; nrpn_lsb_start[71] = 96; param_max_start[71] = 1600; // Op4 Env Sustain (slider72)
+nrpn_msb_start[72] = 0; nrpn_lsb_start[72] = 98; param_max_start[72] = 1600; // Op4 Env Release (slider73)
+nrpn_msb_start[73] = 0; nrpn_lsb_start[73] = 93; param_max_start[73] = 100;  // Op4 Env Attack Level (slider74)
+nrpn_msb_start[74] = 0; nrpn_lsb_start[74] = 95; param_max_start[74] = 100;  // Op4 Env Decay Level (slider75)
+nrpn_msb_start[75] = 0; nrpn_lsb_start[75] = 97; param_max_start[75] = 100;  // Op4 Env Sustain Level (slider76)
+nrpn_msb_start[76] = 0; nrpn_lsb_start[76] = 99; param_max_start[76] = 100;  // Op4 Env Release Level (slider77)
+
+// Op5 Parameters (slider78–89 → index 77-88)
+nrpn_msb_start[77] = 0; nrpn_lsb_start[77] = 60;  param_max_start[77] = 13;   // Op5 Shape (slider78)
+nrpn_msb_start[78] = 0; nrpn_lsb_start[78] = 61;  param_max_start[78] = 2;    // Op5 Freq Type (slider79)
+nrpn_msb_start[79] = 0; nrpn_lsb_start[79] = 62;  param_max_start[79] = 1600; // Op5 Frequency (slider80)
+nrpn_msb_start[80] = 0; nrpn_lsb_start[80] = 63;  param_max_start[80] = 1800; // Op5 Fine Tune (slider81)
+nrpn_msb_start[81] = 0; nrpn_lsb_start[81] = 100; param_max_start[81] = 1600; // Op5 Env Attack (slider82)
+nrpn_msb_start[82] = 0; nrpn_lsb_start[82] = 102; param_max_start[82] = 1600; // Op5 Env Decay (slider83)
+nrpn_msb_start[83] = 0; nrpn_lsb_start[83] = 104; param_max_start[83] = 1600; // Op5 Env Sustain (slider84)
+nrpn_msb_start[84] = 0; nrpn_lsb_start[84] = 106; param_max_start[84] = 1600; // Op5 Env Release (slider85)
+nrpn_msb_start[85] = 0; nrpn_lsb_start[85] = 101; param_max_start[85] = 100;  // Op5 Env Attack Level (slider86)
+nrpn_msb_start[86] = 0; nrpn_lsb_start[86] = 103; param_max_start[86] = 100;  // Op5 Env Decay Level (slider87)
+nrpn_msb_start[87] = 0; nrpn_lsb_start[87] = 105; param_max_start[87] = 100;  // Op5 Env Sustain Level (slider88)
+nrpn_msb_start[88] = 0; nrpn_lsb_start[88] = 107; param_max_start[88] = 100;  // Op5 Env Release Level (slider89)
+
+// Op6 Parameters (slider90–101 → index 89-100)
+nrpn_msb_start[89]  = 0; nrpn_lsb_start[89]  = 64;  param_max_start[89]  = 13;    // Op6 Shape (slider90)
+nrpn_msb_start[90]  = 0; nrpn_lsb_start[90]  = 65;  param_max_start[90]  = 2;     // Op6 Freq Type (slider91)
+nrpn_msb_start[91]  = 0; nrpn_lsb_start[91]  = 66;  param_max_start[91]  = 1600;  // Op6 Frequency (slider92)
+nrpn_msb_start[92]  = 0; nrpn_lsb_start[92]  = 67;  param_max_start[92]  = 1800;  // Op6 Fine Tune (slider93)
+nrpn_msb_start[93]  = 0; nrpn_lsb_start[93]  = 108; param_max_start[93]  = 1600;  // Op6 Env Attack (slider94)
+nrpn_msb_start[94]  = 0; nrpn_lsb_start[94]  = 110; param_max_start[94]  = 1600;  // Op6 Env Decay (slider95)
+nrpn_msb_start[95]  = 0; nrpn_lsb_start[95]  = 112; param_max_start[95]  = 1600;  // Op6 Env Sustain (slider96)
+nrpn_msb_start[96]  = 0; nrpn_lsb_start[96]  = 114; param_max_start[96]  = 1600;  // Op6 Env Release (slider97)
+nrpn_msb_start[97]  = 0; nrpn_lsb_start[97]  = 109; param_max_start[97]  = 100;   // Op6 Env Attack Level (slider98)
+nrpn_msb_start[98]  = 0; nrpn_lsb_start[98]  = 111; param_max_start[98]  = 100;   // Op6 Env Decay Level (slider99)
+nrpn_msb_start[99]  = 0; nrpn_lsb_start[99]  = 113; param_max_start[99]  = 100;   // Op6 Env Sustain Level (slider100)
+nrpn_msb_start[100] = 0; nrpn_lsb_start[100] = 115; param_max_start[100] = 100;   // Op6 Env Release Level (slider101)
+
+nrpn_msb_start[101] = 1; nrpn_lsb_start[101] = 88;  param_max_start[101] = 2;    // Glide Type  (slider102)
+nrpn_msb_start[102] = 1; nrpn_lsb_start[102] = 89;  param_max_start[102] = 100; // Unison Spread (slider103)
+nrpn_msb_start[103] = 1; nrpn_lsb_start[103] = 90;  param_max_start[103] = 200; // Unison Detune (slider104)
+
+// PULL slider
+nrpn_msb_start[104] = 127; nrpn_lsb_start[104] = 127;  param_max_start[104] = 127; // PULL slider (slider105)
+
+// Function to convert display value to MIDI value
+function display_to_midi(param_index, display_val)
+(
+  param_index == 1 ? display_val :                                           // Algorithm (indeks 1)
+  param_index >= 5 && param_index <= 9 ? (display_val * 100) :               // IM1-5: indeks 5–9 -> 0-1600
+  param_index >= 11 && param_index <= 15 ? (display_val * 100) :             // IM Velocity: indeks 11–15 -> 0-1600
+  param_index >= 23 && param_index <= 28 ? (display_val + 100) :             // Pan: indeks 23–28 -> 0-200
+  param_index == 31 || param_index == 43 || param_index == 55 || param_index == 67 || param_index == 79 || param_index == 91 ? (display_val * 100) : // Op Freq: indeks 31,43,55,67,79,91
+  param_index == 32 || param_index == 44 || param_index == 56 || param_index == 68 || param_index == 80 || param_index == 92 ? ((display_val + 9) * 100) : // Fine Tune: indeks 32,44,56,68,80,92
+  (param_index >= 33 && param_index <= 36) || (param_index >= 45 && param_index <= 48) || (param_index >= 57 && param_index <= 60) || (param_index >= 69 && param_index <= 72) || (param_index >= 81 && param_index <= 84) || (param_index >= 93 && param_index <= 96) ? (display_val * 100) : // Env (0-16 → 0-1600)
+  display_val;                                                               
+);
+
+@slider
+// Calculate NRPN values for all parameters
+i=0;
+loop(params,
+  // Get slider value
+  slider_val = slider(i+1);
+  
+  // Convert display value to MIDI value
+  midi_val = display_to_midi(i, slider_val);
+  
+  // Clamp to valid range
+  midi_val = max(0, min(midi_val, param_max_start[i]));
+  
+  // Convert to 14-bit NRPN: MSB = bits 7-13, LSB = bits 0-6
+  valmsb_start[i] = floor(midi_val / 128);
+  vallsb_start[i] = midi_val % 128;
+  
+  i += 1;
+);
+
+@block
+offset = 0;
+
+@sample
+i=0;
+loop(params,
+  (valmsb_start[i] != valmsb_pre_start[i]) || (vallsb_start[i] != vallsb_pre_start[i]) ?
+  (
+    // Send NRPN Parameter Number
+    midisend(offset, $xB0 + chanout, 99, nrpn_msb_start[i]); // CC99 = NRPN MSB
+    midisend(offset, $xB0 + chanout, 98, nrpn_lsb_start[i]); // CC98 = NRPN LSB 
+    // Send Data Entry
+    midisend(offset, $xB0 + chanout, 6,  valmsb_start[i]);   // CC6  = Data Entry MSB
+    midisend(offset, $xB0 + chanout, 38, vallsb_start[i]);   // CC38 = Data Entry LSB
+    
+    valmsb_pre_start[i] = valmsb_start[i];
+    vallsb_pre_start[i] = vallsb_start[i];
+  );
+  i += 1;
+);
+
+@gfx
+
+  ui_start();
+
+  chanout = control_dial(chanout, 0, 15);
+
+
+@serialize
+file_var(0, chanout);
