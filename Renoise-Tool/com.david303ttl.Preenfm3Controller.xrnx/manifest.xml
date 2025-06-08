@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RenoiseScriptingTool doc_version="0">
+  <ApiVersion>6.1</ApiVersion>
+  <Id>com.david303ttl.Preenfm3Controller</Id>
+  <Version>1.0</Version>
+  <Author>David303ttl</Author>
+  <Name>Preenfm3 controller</Name>
+  <Category>Midi Controller</Category>
+  <Description>Simple NRPN tool for Preenfm3</Description>
+</RenoiseScriptingTool>
