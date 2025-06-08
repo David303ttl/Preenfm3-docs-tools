@@ -1,0 +1,174 @@
+PreenFM3 Master Template
+========================
+Always check Algorithms (Brief routing, modulators → carriers, feedback).
+Always include parameters for:
+- Global
+- FM → MI
+- FM → Mix
+- Operator Settings
+- Amp Env Time
+- Amp Env Curve
+- Envelope Level Settings
+
+1. Global (FM Engine)
+Parameter         | Value
+----------------- | ------------------------
+Algo              | (1–32)
+Velo              | (1–16)
+Mode              | Mono / Poly / Unison
+• Voices          | (1–16) [in MIX → Voices]
+Mono Glide        | Off / Overlap / Always
+Glide Speed       | (0–12)
+Unis Spread       | (0.00–1.00)
+Unis Detune       | (-1.00 1.00)
+
+2. FM → MI (Modulation Index)
+Slot | Modulator → Carrier | Value (0.00–16.00)
+---- | ------------------- | --------------------
+IM1  | __________________ | 
+IM2  | __________________ | 
+IM3  | __________________ | 
+IM4  | __________________ | 
+IM5  | __________________ | 
+FdBck| (Operator 1–6)      | (0.00–1.00)
+
+3. FM → Mix (Op Mixer)
+Op | Mix (0.00–1.00) | Pan (–1.00–1.00)
+-- | --------------- | ----------------
+1  | _______________ | _______________
+2  | _______________ | _______________
+3  | _______________ | _______________
+4  | _______________ | _______________
+5  | _______________ | _______________
+6  | _______________ | _______________
+
+4. Operator Settings (1–6)
+Op | Shape | F‑Type | Freq Ratio | Fine‑Tune | Mix
+---|-------|------- |------------|-----------|-----
+1  |       |        |            |           |
+2  |       |        |            |           |
+3  |       |        |            |           |
+4  |       |        |            |           |
+5  |       |        |            |           |
+6  |       |        |            |           |
+
+Oscillator
+
+        Shape: sin / saw / squa / s² / sinezero / sinepositive / rand / Usr1–6
+
+        FType: keyb / keHz / fixe
+
+        Freq (coarse): keyb/keHz 0.00–9.91 & 10.0–16 OR fixe 0–16000
+
+        Fine: keyb/keHz –9.00–9.00 OR fixe 0–16000
+
+
+5. Amp Env Time (Attk / Deca / Sust / Rel) Value (0.00–16.00)
+Op | Attk | Deca | Sust | Rel
+-- | ---- | ---- | ---- | ---
+1  | ____ | ____ | ____ | ____
+2  | ____ | ____ | ____ | ____
+3  | ____ | ____ | ____ | ____
+4  | ____ | ____ | ____ | ____
+5  | ____ | ____ | ____ | ____
+6  | ____ | ____ | ____ | ____
+
+6. Amp Env Curve (Attk / Dec / Sus / Rel)
+Op | Curve (Exp / Lin / Log / Usr1–4)
+-- | --------------------------------
+1  | __________________
+2  | __________________
+3  | __________________
+4  | __________________
+5  | __________________
+6  | __________________
+
+7. Env Level (Attk / Dec / Sus / Rel)
+Op | Level (0.00–1.00)
+-- | ----------------
+1  | ________________
+2  | ________________
+3  | ________________
+4  | ________________
+5  | ________________
+6  | ________________
+
+8. Modulation Matrix (slots 1–12)
+Slot | Source         | Mult (–10–24) | Dest1      | Dest2
+-----|----------------|---------------|------------|------------
+1    | ______________ | ________      | ________   | ________
+2    | ______________ | ________      | ________   | ________
+3    | ______________ | ________      | ________   | ________
+4    | ______________ | ________      | ________   | ________
+5    | ______________ | ________      | ________   | ________
+6    | ______________ | ________      | ________   | ________
+7    | ______________ | ________      | ________   | ________
+8    | ______________ | ________      | ________   | ________
+9    | ______________ | ________      | ________   | ________
+10   | ______________ | ________      | ________   | ________
+11   | ______________ | ________      | ________   | ________
+12   | ______________ | ________      | ________   | ________
+
+    Valid Sources:
+      None, LFO 1, LFO 2, LFO 3, FreeEnv 1, FreeEnv 2, Steps 1, Steps 2, Midi Note 1, Midi Note 2, ModWheel, PitchBend, Aftertouch, PolyAftertouch, Velocity, Breath Controller, Perf 1, Perf 2, Perf 3,  Perf 4, RandomKey, Pitchbend MPE, AfterTouch MPE, CC74 MPE, UserCC1, UserCC2, UserCC 3, UserCC 4
+     
+    Valid Destinations:
+      None, Gate, IM1, IM2, IM3, IM4, IM Feedback, IM* (all MI), Mix1, Pan1, Mix2, Pan2, Mix3,  Pan3, Mix4, Pan4, Mix*, Pan*, o1 Fq, o2 Fq, o3 Fq, o4 Fq, o5 Fq, o6 Fq, o*Fq, o*Fh, Atk1, Atk2, Atk3, Atk4, Atk5, Atk6, Atk Carriers, Atk Modulators, Dec Carriers, Dec Modulators, Rel Carriers, Rel Modulators, mtx01, mtx02, mtx03, mtx04, lfo1F, lfo2F, lfo3F, env2 Silence, stp1 gate, stp2 gate,Fx1 1, Fx1 2, fx1Am, Fx2 1, Fx2 2, fx2Am
+
+9. Additional Modules
+a) Lfos
+LFO1-3: Shape, Sync, Freq, KSync, Bias, Phase
+
+Parametr	Value
+Shape	Sin / Saw / Tria / Squa / Rand / Brwn / Wndr / Flow
+Sync	Int (Hz) 0.00–99.9 / Ext (C/16–Ck*8)
+KSync	off / 0.00–16.00
+Bias	–1.00–1.00
+Phase	0.00–1.00
+
+b) Free Envelope:
+FreeEnv1: Attk, Deca, Sust, Release
+FreeEnv2: Silence, Attk, Deca, Loop
+
+c) Step Sequencer
+Steps1-2: Step Sequencer 1 & 2 (Int/Ext, BPM, Gate, 16 steps)
+
+d) Midi Note 
+Midi Note 1-2:
+Before: Flat, +Lin, +Lin8, +Exp, -Lin, -Lin8, -Exp
+Break Point: note 0-127
+After: Flat, +Lin, +Lin8, +Exp, -Lin, -Lin8, -Exp
+
+10. Algorithms (Brief routing, modulators → carriers, feedback)
+Algo 1: OP2→OP1; OP3→OP1; Feedback on OP3; Carrier: OP1
+Algo 2: OP3→OP1/OP2; Feedback on OP3; Carriers: OP1, OP2
+Algo 3: OP2/3/4→OP1; OP3→OP4; Feedback on OP4; Carrier: OP1
+Algo 4: OP3→OP1/2; OP4→OP2/3; Feedback on OP4; Carriers: OP1, OP2
+Algo 5: OP4→OP2/3; OP3→OP2; OP2→OP1; Feedback on OP4; Carrier: OP1
+Algo 6: OP4→OP1/2/3; Feedback on OP4; Carriers: OP1,OP2,OP3
+Algo 7: OP2→OP1; OP4→OP3/6; OP6→OP5; Feedback on OP4; Carriers: OP1,OP3,OP5
+Algo 8: OP2/3/4→OP1; Feedback on OP4; OP6→OP5; Carriers: OP1,OP5
+Algo 9: OP2/3→OP1; OP5→OP4; OP6→OP5; Feedback on OP6; Carriers: OP1,OP4
+Algo 10: OP2→OP1; OP6→5→4→3; Feedback on OP2; Carriers: OP1,OP3
+Algo 11: OP3→2→1; OP6→5→4; Feedback on OP6; Carriers: OP1,OP4
+Algo 12: OP2→1; OP4→3; OP6→5; Feedback on OP6; Carriers: OP1,OP3,OP5
+Algo 13: OP2→1; OP4→3; OP5→3; OP6→5; Feedback on OP4; Carriers: OP1,OP3
+Algo 14: OP2→1; OP3→2; OP5→4; OP6→4; Feedback on OP6; Carriers: OP1,OP4
+Algo 15: OP2→1; OP4/5/6→3; Feedback on OP6; Carrier: OP3
+Algo 16: OP5/6→4; OP4→3; OP2→1; Feedback on OP2; Carriers: OP1,OP3
+Algo 17: OP2→1; OP3→1; OP4→3; OP5→1; OP6→5; Feedback on OP2; Carrier: OP1
+Algo 18: OP6→5→4→1; OP3→1; OP2→1; Feedback on OP3; Carrier: OP1
+Algo 19: OP2→1; OP3→2; OP6→4/5; Feedback on OP6; Carriers: OP1,OP4,OP5
+Algo 20: OP3→1/2; OP5/6→4; Feedback on OP3; Carriers: OP1,OP2,OP4
+Algo 21: OP3→1/2; OP6→4/5; Feedback on OP3; Carriers: OP1,OP2,OP4,OP5
+Algo 22: OP2→1; OP6→3/4/5; Feedback on OP6; Carriers: OP1,OP3,OP4,OP5
+Algo 23: OP6→3/4/5; Feedback on OP6; Carriers: OP1-OP5
+Algo 24: OP2→1; OP5→4→3; Feedback on OP5; Carriers: OP1,OP3,OP6
+Algo 25: OP4→3; OP6→5; Feedback on OP6; Carriers: OP1,OP2,OP3,OP5
+Algo 26: OP5→4→3; Feedback on OP5; Carriers: OP1,OP2,OP3,OP6
+Algo 27: Additive all ops; Feedback on OP6; Carriers: OP1-OP6
+Algo 28: OP6→5; Feedback on OP6; Carriers: OP1-OP5
+Algo 29: OP4→2/3; OP3→1; Feedback on OP4; Carriers: OP1,OP2
+Algo 30: OP3/4→1/2; Feedback on OP4; Carriers: OP1,OP2
+Algo 31: OP4→1/2/3; No feedback; Carriers: OP1,OP2,OP3
+Algo 32: OP2/3/4→1; OP3→4; Feedback on OP3; Carrier: OP1
