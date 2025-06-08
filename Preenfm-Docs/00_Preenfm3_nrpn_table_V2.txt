@@ -1,0 +1,315 @@
+Preenfm3 NRPN
+
+### Examples
+
+CC | Function 		| Value
+99 | NRPN MSB 		| 0-1
+98 | NRPN LSB 		| 0-127
+6  | Data Entry MSB 	| 0-12 	Sets the range for 0-1600		| 0-1 Sets the range 0-200 
+			|  	 0 = 0-1.27				| 	0 = 0.00-1.27
+			|  	 1 = 1.28-2.55				| 	1 = 1.28-2.00 (CC38 72  = 2.00)
+			|  	 2 = 2.56-3.83				|
+			|  	 3 = 3.84-5.11				| or
+			|  	 4 = 5.12-6.39				| 0-1 Sets the range 0-200 
+			|  	 5 = 6.40-7.67				| 	0 = -1.00-0.27 (CC38 -100 = Left 100 = center)
+			|  	 6 = 7.68-8.95				| 	1 =  0.28-1.00 (CC38 72  = Right)
+			|  	 7 = 8.96-10.2				|
+			|  	 8 = 10.2-11.5				|
+			|  	 9 = 11.5-12.7				|
+			| 	10 = 12.8-14.0				|
+			| 	11 = 14-15.3				|
+			| 	12 = 15.3-16 (CC38 0-64, >64 = 16.0)	|
+38 | Data Entry LSB 	| 0-127						|
+
+
+CC 38 changes FX1 Filter type  
+CC | Function 		| Value
+99 | NRPN MSB 		| 0
+98 | NRPN LSB 		| 40
+6  | Data Entry MSB 	| 0
+38 | Data Entry LSB 	| 0-48
+
+CC | Function 		| Value
+99 | NRPN MSB 		| 0
+98 | NRPN LSB 		| 6
+6  | Data Entry MSB 	| 7
+38 | Data Entry LSB 	| 103
+CC98 IM2, CC6 sets the range to 8.96-10.2, CC38 IM2 value = 9.99
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+### Basic Parameters
+
+| Parameter           | MSB | LSB | Max Value | 
+|---------------------|:---:|:---:|:---------:|
+| Algorithm Number    |  0  |  0  |     31    |
+| Velocity            |  0  |  1  |     16    |
+| Mode                |  0  |  2  |     2     | Mono, Poly, Unison
+| Glide Speed         |  0  |  3  |     12    |
+
+### Glide and Unison Controls
+
+| n | Parameter     | MSB | LSB | Max Value |
+|--:|:--------------|:---:|:---:|:---------:|
+| 1 | Glide Type    | 1   | 88  | 2         |
+| 1 | Unison Spread | 1   | 89  | 100       |
+| 1 | Unison Detune | 1   | 90  | 200       |
+
+### Modulation Index (IM)
+
+| n | MSB | LSB | Max Value | 
+|:-:|:---:|:---:|:---------:|
+| 1 |  0  |  4  |   1600    | 
+| 2 |  0  |  6  |   1600    | 
+| 3 |  0  |  8  |   1600    | 
+| 4 |  0  | 10  |   1600    | 
+| 5 |  0  | 12  |   1600    | Algo 17 & 18 only 
+|Fdb|  0  | 14  |    100    |
+
+### IM <n> Velocity
+
+| n | MSB | LSB | Max Value |
+|:-:|:---:|:---:|:---------:|
+| 1 |  0  |  5  |   1600    |
+| 2 |  0  |  7  |   1600    |
+| 3 |  0  |  9  |   1600    |
+| 4 |  0  | 11  |   1600    |
+| 5 |  0  | 13  |   1600    | Algo 17 & 18 only 
+|Fdb|  0  | 15  |    100    |
+
+### Mix & Pan (n = 1…6)
+
+| n | Parameter | MSB | LSB | Max Value |
+|:-:|:---------:|:---:|:---:|:---------:|
+| 1 | Mix<1>    |  0  |  16 |    100    |
+| 2 | Mix<2>    |  0  |  18 |    100    |
+| 3 | Mix<3>    |  0  |  20 |    100    |
+| 4 | Mix<4>    |  0  |  22 |    100    |
+| 5 | Mix<5>    |  0  |  24 |    100    |
+| 6 | Mix<6>    |  0  |  26 |    100    |
+
+| 1 | Pan<1>    |  0  |  17 |    200    | CC6
+| 2 | Pan<2>    |  0  |  19 |    200    | 0 = -1.00-0.27 (CC38  0 = Left 100 = center)
+| 3 | Pan<3>    |  0  |  21 |    200    | 1 =  0.28-1.00 (CC38 72 = Right)
+| 4 | Pan<4>    |  0  |  23 |    200    |
+| 5 | Pan<5>    |  0  |  25 |    200    |
+| 6 | Pan<6>    |  0  |  27 |    200    |
+
+### Arpeggiator
+
+| Parameter       | MSB | LSB | Max Value |
+|-----------------|:---:|:---:|:---------:|
+| Arp. Clock      |  0  | 28  |    2      | 0 = off / 1 = internal / 2 = external
+| Arp. BPM        |  0  | 29  | 127/112   | CC6 = 0 BPM 10-127 / CC6 = 1 BPM 128-240
+| Arp. Direction  |  0  | 30  |    11     | Up/Down/Play/Rand/Chrd/RtUp/RtDn/RtUD/ShUp/ShDn/ShUD
+| Arp. Octave     |  0  | 31  |    3      | 1/2/3
+| Arp. Pattern    |  0  | 32  |    25     | 0-21 factory/22-25 user1-4
+| Arp. Division   |  0  | 33  |    16     | 2/1; 3/2; 1/1; 3/4; 2/3; 1/2; 3/8; 1/3; 1/4; 1/6; 1/8; 1/12; 1/16; 1/24; 1/32; 1/48; 1/96
+| Arp. Duration   |  0  | 34  |    16     | 2/1; 3/2; 1/1; 3/4; 2/3; 1/2; 3/8; 1/3; 1/4; 1/6; 1/8; 1/12; 1/16; 1/24; 1/32; 1/48; 1/96
+| Arp. Latch      |  0  | 35  |    1      | 0 = off / 1 = on
+
+### Filter
+
+| Parameter      | MSB | LSB | Max Value |
+|----------------|:---:|:---:|:---------:|
+| Filter Type    |  0  | 40  |    48     |
+| Filter Param1  |  0  | 41  |   100     |
+| Filter Param2  |  0  | 42  |   100     |
+| Filter Gain    |  0  | 43  |   200     | CC6 = 0 0.00-1.27 / CC6 = 1 1.28-2.00 (CC38 72  = 2.00)
+
+### Operator Parameters (n = 1…6)
+
+| Parameter       | Max Value | n=1 | n=2 | n=3 | n=4 | n=5 | n=6 |
+|-----------------|:---------:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Op<n> Shape     |    13     | 44  | 48  | 52  | 56  | 60  | 64  | sin/saw/squa/s^2/sine0/sine+/rand/7=off/usr1/usr2/usr3/usr4/usr5/usr6
+| Op<n> Freq Type |    2      | 45  | 49  | 53  | 57  | 61  | 65  | keyb/fixed/kehz
+| Op<n> Frequency |    12     | 46  | 50  | 54  | 58  | 62  | 66  |
+| Op<n> Fine Tune |    14     | 47  | 51  | 55  | 59  | 63  | 67  |
+
+Op Frequency 0-1600
+| CC6						| CC38
+|  	 0 = 0-1.27				| 25 = 0.25 / 50 = 0.50 / 100 = 1.00
+|  	 1 = 1.28-2.55				| 22 = 1.50 / 72 = 2.00 / 122 = 2.50 
+|  	 2 = 2.56-3.83				| 44 = 3.00 / 94 = 3.50   
+|  	 3 = 3.84-5.11				| 16 = 4.00 / 116 = 5.00
+|  	 4 = 5.12-6.39				| 88 = 6.00
+|  	 5 = 6.40-7.67				| 60 = 7.00
+|  	 6 = 7.68-8.95				| 32 = 8.00
+|  	 7 = 8.96-10.2				|  4 = 9.00 / 104 = 10.0
+|  	 8 = 10.2-11.5				| 76 = 11.0
+|  	 9 = 11.5-12.7				| 48 = 12.0
+| 	10 = 12.8-14.0				| 20 = 13.0 / 120 = 14.0
+| 	11 = 14-15.3				| 92 = 15.0
+| 	12 = 15.3-16				| 64 = 16.0
+
+Op Fine Tune
+| CC6						| CC38
+|	 0 = -9.00 -7.73			|  0 = -9.00 / 100 = -8.00
+|	 1 = -7.72 -6.45			| 72 = -7.00
+|	 2 = -6.44 -5.17			| 44 = -6.00
+|	 3 = -5.16 -3.89			| 16 = -5.00 / 116 = -4.00
+|	 4 = -3.88 -2.61			| 88 = -3.00
+|	 5 = -2.60 -1.33			| 60 = -2.00
+|	 6 = -1.32 -0.05			| 32 = -1.00
+|	 7 = -0.04 1.23				|  4 = 0.00 / 104 = 1.00
+|	 8 =  1.24 2.51				| 76 = 2.00
+|	 9 =  2.52 3.79				| 48 = 3.00
+|	10 =  3.80 5.07				| 20 = 4.00 / 120 = 5.00
+|	11 =  5.08 6.35				| 92 = 6.00
+|	12 =  6.36 7.63				| 64 = 7.00
+|	13 =  7.64 8.91				| 36 = 8.00
+|	14 =  8.92 9.00				|  8 = 9.00
+
+
+### Operator Envelopes (n = 1…6)
+
+| Parameter               | Max Value | n=1 | n=2 | n=3 | n=4 | n=5 | n=6 |
+|-------------------------|:---------:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Op<n> Env Attack        |   1600    | 68  | 76  | 84  | 92  |100  |108  |
+| Op<n> Env Attack Level  |    100    | 69  | 77  | 85  | 93  |101  |109  |
+| Op<n> Env Decay         |   1600    | 70  | 78  | 86  | 94  |102  |110  |
+| Op<n> Env Decay Level   |    100    | 71  | 79  | 87  | 95  |103  |111  |
+| Op<n> Env Sustain       |   1600    | 72  | 80  | 88  | 96  |104  |112  |
+| Op<n> Env Sustain Level |    100    | 73  | 81  | 89  | 97  |105  |113  |
+| Op<n> Env Release       |   1600    | 74  | 82  | 90  | 98  |106  |114  |
+| Op<n> Env Release Level |    100    | 75  | 83  | 91  | 99  |107  |115  |
+
+
+Modulation Matrix (rows 1–12)
+
+| n  | Field          | MSB | LSB | Max Value | Show Decimal |
+|:--:|:---------------|:---:|:---:|:---------:|:------------:|
+| 1  | Mtx1 Source    | 0   | 116 | 27        | False        |
+| 1  | Mtx1 Multiplier| 0   | 117 | 3400      | True         |
+| 1  | Mtx1 Dest 1    | 0   | 118 | 53        | False        |
+| 1  | Mtx1 Dest 2    | 0   | 119 | 53        | False        |
+| 2  | Mtx2 Source    | 0   | 120 | 27        | False        |
+| 2  | Mtx2 Multiplier| 0   | 121 | 3400      | True         |
+| 2  | Mtx2 Dest 1    | 0   | 122 | 53        | False        |
+| 2  | Mtx2 Dest 2    | 0   | 123 | 53        | False        |
+| 3  | Mtx3 Source    | 0   | 124 | 27        | False        |
+| 3  | Mtx3 Multiplier| 0   | 125 | 3400      | True         |
+| 3  | Mtx3 Dest 1    | 0   | 126 | 53        | False        |
+| 3  | Mtx3 Dest 2    | 0   | 127 | 53        | False        |
+| 4  | Mtx4 Source    | 1   | 0   | 27        | False        |
+| 4  | Mtx4 Multiplier| 1   | 1   | 3400      | True         |
+| 4  | Mtx4 Dest 1    | 1   | 2   | 53        | False        |
+| 4  | Mtx4 Dest 2    | 1   | 3   | 53        | False        |
+| 5  | Mtx5 Source    | 1   | 4   | 27        | False        |
+| 5  | Mtx5 Multiplier| 1   | 5   | 3400      | True         |
+| 5  | Mtx5 Dest 1    | 1   | 6   | 53        | False        |
+| 5  | Mtx5 Dest 2    | 1   | 7   | 53        | False        |
+| 6  | Mtx6 Source    | 1   | 8   | 27        | False        |
+| 6  | Mtx6 Multiplier| 1   | 9   | 3400      | True         |
+| 6  | Mtx6 Dest 1    | 1   | 10  | 53        | False        |
+| 6  | Mtx6 Dest 2    | 1   | 11  | 53        | False        |
+| 7  | Mtx7 Source    | 1   | 12  | 27        | False        |
+| 7  | Mtx7 Multiplier| 1   | 13  | 3400      | True         |
+| 7  | Mtx7 Dest 1    | 1   | 14  | 53        | False        |
+| 7  | Mtx7 Dest 2    | 1   | 15  | 53        | False        |
+| 8  | Mtx8 Source    | 1   | 16  | 27        | False        |
+| 8  | Mtx8 Multiplier| 1   | 17  | 3400      | True         |
+| 8  | Mtx8 Dest 1    | 1   | 18  | 53        | False        |
+| 8  | Mtx8 Dest 2    | 1   | 19  | 53        | False        |
+| 9  | Mtx9 Source    | 1   | 20  | 27        | False        |
+| 9  | Mtx9 Multiplier| 1   | 21  | 3400      | True         |
+| 9  | Mtx9 Dest 1    | 1   | 22  | 53        | False        |
+| 9  | Mtx9 Dest 2    | 1   | 23  | 53        | False        |
+| 10 | Mtx10 Source   | 1   | 24  | 27        | False        |
+| 10 | Mtx10 Multiplie| 1   | 25  | 3400      | True         |
+| 10 | Mtx10 Dest 1   | 1   | 26  | 53        | False        |
+| 10 | Mtx10 Dest 2   | 1   | 27  | 53        | False        |
+| 11 | Mtx11 Source   | 1   | 28  | 27        | False        |
+| 11 | Mtx11 Multiplie| 1   | 29  | 3400      | True         |
+| 11 | Mtx11 Dest 1   | 1   | 30  | 53        | False        |
+| 11 | Mtx11 Dest 2   | 1   | 31  | 53        | False        |
+| 12 | Mtx12 Source   | 1   | 32  | 27        | False        |
+| 12 | Mtx12 Multiplie| 1   | 33  | 3400      | True         |
+| 12 | Mtx12 Dest 1   | 1   | 34  | 53        | False        |
+| 12 | Mtx12 Dest 2   | 1   | 35  | 53        | False        |
+
+
+### LFO (n = 1…3)
+
+| n | Field        | MSB | LSB |
+|:-:|:-------------|:---:|:---:|
+| 1 | Shape        |  1  |  40 | 0 = sin / 1 = saw / 2 = tri / 3 = squa / 4 = random / 5 = Brwn / 6 = Wndr / 7 = Flow
+| 2 | Shape        |  1  |  44 |
+| 3 | Shape        |  1  |  48 |
+| 1 | Frequency    |  1  |  41 | Safe to use CC6 0-77
+| 2 | Frequency    |  1  |  45 |
+| 3 | Frequency    |  1  |  49 |
+| 1 | Bias         |  1  |  42 | CC6 0 = -1.00 0.27 / CC6 1 = 0.28 1.00
+| 2 | Bias         |  1  |  46 |
+| 3 | Bias         |  1  |  50 |
+| 1 | Key Sync     |  1  |  43 | same as Op Frequency. CC6 0 & CC38 0 = off
+| 2 | Key Sync     |  1  |  47 |
+| 3 | Key Sync     |  1  |  51 |
+| 1 | Phase        |  1  |  68 | 0-100
+| 2 | Phase        |  1  |  69 |
+| 3 | Phase        |  1  |  70 |
+
+### Notes
+
+| n | Parameter      | MSB | LSB | Max Value |
+|:-:|:---------------|:---:|:---:|:---------:|
+| 1 | Note1 Before   | 1   | 72  | 6         |
+| 1 | Note1 Breaknote| 1   | 73  | 127       |
+| 1 | Note1 After    | 1   | 74  | 6         |
+| 2 | Note2 Before   | 1   | 76  | 6         |
+| 2 | Note2 Breaknote| 1   | 77  | 127       |
+| 2 | Note2 After    | 1   | 78  | 6         |
+
+### Free Envelope (2 env)
+
+| Parameter              | MSB | LSB | Max Value |
+|------------------------|:---:|:---:|:---------:|
+| Free Env1 Attack       |  1  | 52  |    1600   |
+| Free Env1 Decay        |  1  | 53  |    1600   |
+| Free Env1 Sustain      |  1  | 54  |    100    |
+| Free Env1 Release      |  1  | 55  |    100    |
+| Free Env2 Silence      |  1  | 56  |    1600   |
+| Free Env2 Attack       |  1  | 57  |    1600   |
+| Free Env2 Decay        |  1  | 58  |    1600   |
+| Free Env2 Loop         |  1  | 59  |     2     | No/Sile/Att
+
+### Step Sequencer (n = 1…2)
+
+| n | Parameter        | MSB | LSB | Max Value |
+|:--:|:-----------------|:---:|:---:|:---------:|
+| 1 | StepSeq1 BPM     | 1   | 60  | 245       |
+| 1 | StepSeq1 Gate    | 1   | 61  | 100       |
+| 1 | StepSeq1 Step1   | 2   | 0   | 15        |
+| 1 | StepSeq1 Step2   | 2   | 1   | 15        |
+| 1 | StepSeq1 Step3   | 2   | 2   | 15        |
+| 1 | StepSeq1 Step4   | 2   | 3   | 15        |
+| 1 | StepSeq1 Step5   | 2   | 4   | 15        |
+| 1 | StepSeq1 Step6   | 2   | 5   | 15        |
+| 1 | StepSeq1 Step7   | 2   | 6   | 15        |
+| 1 | StepSeq1 Step8   | 2   | 7   | 15        |
+| 1 | StepSeq1 Step9   | 2   | 8   | 15        |
+| 1 | StepSeq1 Step10  | 2   | 9   | 15        |
+| 1 | StepSeq1 Step11  | 2   | 10  | 15        |
+| 1 | StepSeq1 Step12  | 2   | 11  | 15        |
+| 1 | StepSeq1 Step13  | 2   | 12  | 15        |
+| 1 | StepSeq1 Step14  | 2   | 13  | 15        |
+| 1 | StepSeq1 Step15  | 2   | 14  | 15        |
+| 1 | StepSeq1 Step16  | 2   | 15  | 15        |
+| 2 | StepSeq2 BPM     | 1   | 64  | 245       |
+| 2 | StepSeq2 Gate    | 1   | 65  | 100       |
+| 2 | StepSeq2 Step1   | 3   | 0   | 15        |
+| 2 | StepSeq2 Step2   | 3   | 1   | 15        |
+| 2 | StepSeq2 Step3   | 3   | 2   | 15        |
+| 2 | StepSeq2 Step4   | 3   | 3   | 15        |
+| 2 | StepSeq2 Step5   | 3   | 4   | 15        |
+| 2 | StepSeq2 Step6   | 3   | 5   | 15        |
+| 2 | StepSeq2 Step7   | 3   | 6   | 15        |
+| 2 | StepSeq2 Step8   | 3   | 7   | 15        |
+| 2 | StepSeq2 Step9   | 3   | 8   | 15        |
+| 2 | StepSeq2 Step10  | 3   | 9   | 15        |
+| 2 | StepSeq2 Step11  | 3   | 10  | 15        |
+| 2 | StepSeq2 Step12  | 3   | 11  | 15        |
+| 2 | StepSeq2 Step13  | 3   | 12  | 15        |
+| 2 | StepSeq2 Step14  | 3   | 13  | 15        |
+| 2 | StepSeq2 Step15  | 3   | 14  | 15        |
+| 2 | StepSeq2 Step16  | 3   | 15  | 15        |
